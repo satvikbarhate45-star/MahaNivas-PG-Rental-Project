@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking History | MahaNivas</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f4f7fb;color:#333;padding:20px;}
+.container{max-width:1200px;margin:auto;}
+h1{text-align:center;margin-bottom:40px;color:#004aad;font-size:36px;}
+
+/* Back Button */
+.back-btn{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:10px 18px;
+    background:#004aad;
+    color:white;
+    text-decoration:none;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:500;
+    transition:0.3s ease;
+}
+.back-btn:hover{
+    background:#002c7a;
+    transform:translateY(-2px);
+}
+
+/* Booking Card */
+.booking-card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:40px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    opacity:0;
+    transform: translateY(50px);
+    animation: fadeInUp 0.7s forwards;
+    transition:0.3s ease;
+}
+.booking-card:hover{
+    transform: translateY(-5px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Animation */
+@keyframes fadeInUp{
+    to {opacity:1; transform:translateY(0);}
+}
+
+/* Room Title */
+.room-title{font-size:24px;font-weight:bold;color:#004aad;}
+
+/* Room Info */
+.room-info{margin:10px 0;font-size:15px;color:#555;}
+
+/* Room Images */
+.room-images{display:flex;flex-wrap:wrap;gap:12px;margin-top:15px;}
+.room-images img{
+    width:120px;
+    height:90px;
+    object-fit:cover;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+.room-images img:hover{transform:scale(1.05);}
+
+/* Booking Details */
+.booking-details{margin-top:20px;background:#eef2ff;padding:15px;border-radius:10px;}
+.booking-details p{margin:6px 0;}
+
+/* Forms */
+.review-section, .complaint-section{
+    margin-top:20px;
+    background:#fff3e0;
+    padding:15px;
+    border-radius:10px;
+    transition:0.3s;
+}
+.review-section h4, .complaint-section h4{margin-bottom:12px;color:#ff9800;font-size:18px;}
+.review-section input[type="text"], .review-section select, .review-section textarea, .review-section input[type="file"]{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    transition:0.3s;
+}
+.review-section input[type="text"]:focus, .review-section select:focus, .review-section textarea:focus{
+    border-color:#004aad;
+    outline:none;
+    box-shadow:0 0 5px rgba(0,74,173,0.3);
+}
+.submit-btn{
+    background:#004aad;color:white;padding:10px 18px;border:none;border-radius:6px;cursor:pointer;transition:0.3s;
+}
+.submit-btn:hover{background:#002c7a;transform:translateY(-2px);}
+</style>
+</head>
+<body>
+
+<div class="container">
+<a href="{% url 'explore_rooms' %}" class="back-btn">← Back to Explore Rooms</a>
+<h1>📜 Your Booking History</h1>
+
+{% if bookings %}
+    {% for booking in bookings %}
+    <div class="booking-card" style="animation-delay: {{ forloop.counter0|add:"0.1"|floatformat:1 }}s;">
+        <div class="room-title">{{ booking.room.title }}</div>
+        <div class="room-info">
+            📍 {{ booking.room.district.name }} | ₹{{ booking.room.price }}/month <br>
+            From: {{ booking.from_date }} &nbsp; To: {{ booking.to_date }} <br>
+            People: {{ booking.people_count }} | Total: ₹{{ booking.total_amount }}
+        </div>
+
+        <div class="room-images">
+            <img src="{{ booking.room.main_image.url }}" alt="{{ booking.room.title }}">
+            {% for img in booking.room.gallery.all %}
+                <img src="{{ img.image.url }}" alt="Gallery">
+            {% empty %}
+                <p>No additional images.</p>
+            {% endfor %}
+        </div>
+
+        <div class="booking-details">
+            <p><strong>Aadhaar:</strong> {{ booking.aadhaar_number }}</p>
+            <p><strong>Mobile:</strong> {{ booking.mobile_number }}</p>
+            <p><strong>Booking Made On:</strong> {{ booking.created_at|date:"d M Y, H:i" }}</p>
+        </div>
+
+        <!-- Review Form -->
+        <div class="review-section">
+            <h4>⭐ Add a Review</h4>
+            <form method="POST" action="{% url 'add_review' booking.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Rating:</label>
+                <select name="rating" required>
+                    <option value="">Select Rating</option>
+                    {% for i in "12345" %}
+                        <option value="{{ i }}">{{ i }} ⭐</option>
+                    {% endfor %}
+                </select>
+                <label>Comment:</label>
+                <input type="text" name="comment" placeholder="Write your review..." required>
+                <label>Upload Image (optional):</label>
+                <input type="file" name="review_image">
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </div>
+
+       
+    {% endfor %}
+{% else %}
+    <p style="text-align:center;font-size:18px;padding:50px;">You have no bookings yet. <a href="{% url 'explore_rooms' %}">Explore Rooms</a></p>
+{% endif %}
+
+</div>
+
+</body>
+</html>

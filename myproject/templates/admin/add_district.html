@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="color:#004aad; margin-bottom:20px;">Add New District</h2>
+
+<div style="background:white; padding:20px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.05); max-width:500px;">
+    <form method="POST" style="display:flex; flex-direction:column; gap:15px;">
+        {% csrf_token %}
+        
+        <label for="name" style="font-weight:500; color:#004aad;">District Name</label>
+        <input type="text" name="name" id="name" placeholder="Enter District Name" required
+               style="padding:10px; border:1px solid #ccc; border-radius:5px; font-size:14px; outline:none;">
+        
+        <button type="submit"
+                style="padding:10px; background:#004aad; color:white; border:none; border-radius:5px; cursor:pointer; font-size:15px; transition:0.3s;">
+            Add District
+        </button>
+    </form>
+</div>
+{% endblock %}

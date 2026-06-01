@@ -1,0 +1,1005 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>MahaNivas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+/* ================= GLOBAL ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f8ff;
+ 
+    padding-top:80px;
+
+}
+
+section{
+    padding:70px 80px;
+}
+
+/* ================= NAV ================= */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 80px;
+    background:white;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    position:fixed;   /* change from relative */
+    top:0;
+    left:0;
+    width:100%;
+    z-index:5000;
+    transition:transform 0.4s ease;  /* smooth animation */
+}
+
+/* Hide class */
+.nav-hide{
+    transform:translateY(-100%);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo img{
+    height:45px;
+}
+
+.logo h2{
+    color:#004aad;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    cursor:pointer;
+}
+
+.nav-links a:hover{
+    color:#004aad;
+}
+
+/* DROPDOWN */
+
+.dropdown{
+    position:absolute;
+    top:70px;
+    right:80px;
+    width:220px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    animation:slideDown 0.3s ease forwards;
+    z-index:6000;
+}
+
+.dropdown a{
+    padding:12px 15px;
+    border-bottom:1px solid #eee;
+    color:#333;
+    text-decoration:none;
+}
+
+.dropdown a:hover{
+    background:#f4f8ff;
+    color:#004aad;
+}
+
+@keyframes slideDown{
+    from{opacity:0; transform:translateY(-15px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    display:flex;
+    height:85vh;
+}
+
+/* SLIDER */
+
+.slider{
+    width:70%;
+    margin-left:30px;
+    height:80vh;
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+   
+}
+
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 1s ease-in-out;
+    z-index:1;
+}
+
+.slide.active{
+    opacity:1;
+}
+
+/* DARK OVERLAY */
+
+.overlay{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:40px;
+
+    /* 🔥 IMPORTANT FIX */
+    pointer-events:none;
+}
+
+.overlay h1{
+    font-size:44px;
+    margin-bottom:15px;
+}
+
+.overlay p{
+    font-size:18px;
+}
+
+/* SEARCH */
+
+.search-wrapper{
+    position:absolute;
+    bottom:120px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    z-index:1000;  /* 🔥 ABOVE OVERLAY */
+}
+
+.search-box{
+    width:80%;
+    max-width:750px;
+    display:flex;
+    background:white;
+    border-radius:50px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+.search-box input{
+    flex:1;
+    padding:18px 25px;
+    border:none;
+    outline:none;
+    font-size:16px;
+}
+
+.search-box button{
+    padding:18px 30px;
+    background:#004aad;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.search-box button:hover{
+    background:#003080;
+}
+
+/* HERO RIGHT */
+
+.hero-right{
+    width:30%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+    padding:40px;
+    background:#f4f8ff;
+}
+
+.hero-card{
+    height:180px;
+    background-size:cover;
+    background-position:center;
+    border-radius:15px;
+    display:flex;
+    font-size:28px;
+    justify-content:center;
+    text-align:center;
+    color:black;
+    font-weight:bold;
+    position:relative;
+    cursor:pointer;
+opacity:0.8;
+}
+
+.hero-card::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(45deg,#004aad,#001f5c);
+    opacity:0;
+    transition:0.3s;
+    border-radius:15px;
+}
+
+.hero-card:hover::after{
+    opacity:0.5;
+}
+
+.hero-card span{
+    position:relative;
+    z-index:2;
+    padding:10px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.stat-card{
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(0,74,173,0.25);
+}
+
+.stat-card h2{
+    color:#004aad;
+    font-size:36px;
+}
+/* ================= EXPERIENCE SECTION ================= */
+
+.experience-section{
+    padding:100px 20px;
+    text-align:center;
+    background:#f4f8ff;
+}
+
+.experience-content{
+    max-width:900px;
+    margin:0 auto;
+}
+
+.experience-content h1{
+    font-size:42px;
+    color:#004aad;
+    margin-bottom:20px;
+    font-weight:700;
+}
+
+.experience-content h3{
+    font-size:22px;
+    font-weight:400;
+    color:#555;
+    line-height:1.6;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+    .experience-content h1{
+        font-size:28px;
+    }
+    .experience-content h3{
+        font-size:18px;
+    }
+}
+
+/* ================= LIFESTYLE SECTION ================= */
+
+.lifestyle-section{
+    padding:100px 40px;
+    background:#f4f8ff;
+}
+
+.lifestyle-container{
+    max-width:1300px;
+    margin:0 auto;
+    display:flex;
+    gap:40px;
+    align-items:center;
+}
+
+/* LEFT IMAGE */
+
+.lifestyle-left{
+    flex:1.2;
+}
+
+.lifestyle-left img{
+    width:100%;
+    height:500px;
+    object-fit:cover;
+    border-radius:25px;
+}
+
+/* MIDDLE STACK */
+
+.lifestyle-middle{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+.lifestyle-middle img{
+    width:100%;
+    height:235px;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+/* RIGHT TEXT */
+
+.lifestyle-right{
+    flex:1.2;
+}
+
+.lifestyle-right h2{
+    font-size:40px;
+    font-weight:700;
+    margin-bottom:25px;
+    line-height:1.3;
+}
+
+.lifestyle-right span{
+    color:#004aad;
+}
+
+.lifestyle-right p{
+    font-size:18px;
+    color:#555;
+    line-height:1.7;
+    max-width:500px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+    .lifestyle-container{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .lifestyle-right p{
+        max-width:100%;
+        margin:0 auto;
+    }
+
+    .lifestyle-left img{
+        height:400px;
+    }
+
+    .lifestyle-middle{
+        flex-direction:row;
+    }
+
+    .lifestyle-middle img{
+        height:200px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .lifestyle-middle{
+        flex-direction:column;
+    }
+
+    .lifestyle-left img{
+        height:320px;
+    }
+
+    .lifestyle-middle img{
+        height:200px;
+    }
+
+    .lifestyle-right h2{
+        font-size:28px;
+    }
+
+    .lifestyle-right p{
+        font-size:16px;
+    }
+
+}
+/* ================= ROOM SPACE SECTION ================= */
+
+.room-space-section{
+    background:#f4f8ff;
+    padding:120px 80px 0px 80px;
+    position:relative;
+    overflow:hidden;
+    height:900px;
+}
+
+.room-container{
+    max-width:1300px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:60px;
+}
+
+/* TEXT SIDE */
+
+.room-text{
+    width:45%;
+}
+
+.room-text h2{
+    font-size:42px;
+    line-height:1.3;
+    margin-bottom:25px;
+}
+
+.room-text h2 span{
+    color:#004aad;
+}
+
+.room-text p{
+    font-size:18px;
+    line-height:1.8;
+    color:#555;
+}
+
+/* IMAGE SIDE */
+
+.room-images{
+    width:55%;
+    position:relative;
+}
+
+.room-images img{
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    object-fit:cover;
+}
+
+.img-main{
+    width:70%;
+    position:relative;
+    z-index:2;
+}
+
+.img-top{
+    width:40%;
+    position:absolute;
+    top:-60px;
+    right:0;
+    z-index:1;
+}
+
+.img-bottom{
+    width:45%;
+    position:absolute;
+    bottom:-60px;
+    right:30px;
+    z-index:1;
+}
+
+/* CURVE CONNECTOR */
+
+.curve-connector{
+    margin-top:120px;
+    width:100%;
+    height:180px;
+}
+
+.curve-connector svg{
+    width:100%;
+    height:100%;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+    .room-container{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .room-text,
+    .room-images{
+        width:100%;
+    }
+
+    .room-images{
+        margin-top:60px;
+    }
+
+    .img-main{
+        width:80%;
+    }
+
+    .img-top,
+    .img-bottom{
+        display:none;
+    }
+
+    .room-text h2{
+        font-size:30px;
+    }
+
+}
+/* ================= ROOM SECTION ================= */
+
+.room-space-section{
+    background:#f4f8ff;
+    padding:120px 80px;
+}
+
+.room-container{
+    max-width:1300px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:80px;
+}
+
+/* IMAGE SIDE (LEFT) */
+
+.room-images{
+    width:50%;
+    position:relative;
+    height:500px;
+}
+
+/* MAIN BIG IMAGE */
+
+.img-main{
+    width:75%;
+    height:420px;
+    object-fit:cover;
+    border-radius:30px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.15);
+    position:absolute;
+    left:0;
+    top:50px;
+    z-index:2;
+    border:10px solid #fff;
+}
+
+/* SMALL OVERLAP IMAGE */
+
+.img-small{
+    width:55%;
+    height:280px;
+    object-fit:cover;
+    border-radius:30px;
+    position:absolute;
+    right:0;
+    top:0;
+    z-index:3;
+    box-shadow:0 20px 50px rgba(0,0,0,0.12);
+}
+
+/* TEXT SIDE (RIGHT) */
+
+.room-text{
+    width:50%;
+}
+
+.room-text h2{
+    font-size:42px;
+    line-height:1.3;
+    margin-bottom:25px;
+}
+
+.room-text h2 span{
+    color:#004aad;
+}
+
+.room-text p{
+    font-size:18px;
+    line-height:1.8;
+    color:#555;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+    .room-container{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .room-images,
+    .room-text{
+        width:100%;
+    }
+
+    .room-images{
+        height:600px;
+        margin-bottom:40px;
+    }
+
+    .img-main{
+        width:90%;
+        left:5%;
+        top:120px;
+    }
+
+    .img-small{
+        width:70%;
+        right:15%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        <img src="{% static 'logog.png' %}">
+        <h2>MAHA-Nivas</h2>
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'explore_rooms' %}">Explore Rooms</a>
+        <a onclick="toggleDropdown()">Know More</a>
+    </div>
+
+    <div class="dropdown" id="dropdown">
+        <a href="{% url 'about_us' %}">About Us</a>
+      <a href="{% url 'contact_us' %}">Contact Us</a>
+        <a href="{% url 'services' %}">Services</a>
+
+       
+       
+        <a href="{% url 'logout' %}">Logout</a>
+
+
+    </div>
+</nav>
+
+<div class="hero">
+
+    <div class="slider">
+
+
+        <div class="slide active" style="background-image:url('{% static 'ppp.webp' %}')">
+            <div class="overlay">
+                <h1>Your second home in a new city.</h1>
+                <p>Experience the new era of shared living at our professionally managed spaces.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image:url('{% static 'pppp.webp' %}')">
+            <div class="overlay">
+                <h1>No brokerage, move in your way.</h1>
+                <p>Transparent process. No third-party agents.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image:url('{% static 'ppppp.jpg' %}')">
+            <div class="overlay">
+                <h1>Duet or solo, you decide!</h1>
+                <p>Shared or private, live on your own terms.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image:url('{% static 'pppppp.jpg' %}')">
+            <div class="overlay">
+                <h1>Commute less, unwind more.</h1>
+                <p>Spend less time travelling and more time living!</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="hero-card" style="background-image:url('{% static 'card11.jpg' %}')">
+            <span>Modern Students Housing</span>
+        </div>
+
+        <div class="hero-card" style="background-image:url('{% static 'card21.webp' %}')">
+            <span>Co-livings for Professionals</span>
+        </div>
+
+        <div class="hero-card" style="background-image:url('{% static 'card3.jpg' %}')">
+            <span>Managed Apartments</span>
+        </div>
+
+    </div>
+
+</div>
+
+<section>
+    <div class="stats">
+        <div class="stat-card">
+            <h2>{{ district_count }}</h2>
+            <p>Districts</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ total_rooms }}</h2>
+            <p>Total Rooms</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ booked_rooms }}</h2>
+            <p>Rooms Booked</p>
+        </div>
+    </div>
+</section>
+<div class="experience-section">
+    <div class="experience-content">
+        <h1>Not just four walls and a roof.</h1>
+        <h3>Come over and experience how a place to stay can be so much more</h3>
+    </div>
+</div>
+<div class="lifestyle-section">
+
+    <div class="lifestyle-container">
+
+        <!-- LEFT BIG IMAGE -->
+        <div class="lifestyle-left">
+            <img src="{% static 'aaa.jpg' %}" alt="">
+        </div>
+
+        <!-- MIDDLE TWO IMAGES -->
+        <div class="lifestyle-middle">
+            <img src="{% static 'aaaa.webp' %}" alt="">
+            <img src="{% static 'aaaaa.jpg' %}" alt="">
+        </div>
+
+        <!-- RIGHT TEXT -->
+        <div class="lifestyle-right">
+            <h2>
+                Start living your best life
+                from <span>day one</span>
+            </h2>
+
+            <p>
+                Bring a box full of hopes, dreams, ambitions… and of course,
+                your personal belongings. Everything else - furniture,
+                appliances, food - has already been taken care of.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+<section class="room-space-section">
+
+    <div class="room-container">
+
+        <!-- LEFT CONTENT -->
+        <div class="room-text">
+            <h2>
+                Step into a room that has <br>
+                <span>room for everything</span>
+            </h2>
+
+            <p>
+                Your clothes and bag will not be fighting for space on the same chair.
+                At MahaNivas, there's ample room for all your possessions.
+                Even a framed photo of your family, for the rare occasions you miss home.
+            </p>
+        </div>
+
+        <!-- RIGHT IMAGES -->
+        <div class="room-images">
+
+            <img src="{% static 'bbbb.webp' %}" class="img-main">
+
+            <img src="{% static 'bbbbb.jpg' %}" class="img-top">
+
+            <img src="{% static 'bbb.jpg' %}" class="img-bottom">
+
+        </div>
+
+    </div>
+
+
+</section>
+<section class="room-space-section">
+
+    <div class="room-container">
+
+        <!-- LEFT IMAGES -->
+        <div class="room-images">
+
+            <img src="{% static 'ddddd.webp' %}" class="img-main">
+            <img src="{% static 'ddd.jpg' %}" class="img-small">
+
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="room-text">
+            <h2>
+               Take your daily list of
+            chores. And <span>tear it up</span>
+            </h2>
+
+            <p>
+                You have better things to do than wash your clothes, clean up your room and cook your meals. So our team of pros will do them all for you.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+<div class="lifestyle-section">
+
+    <div class="lifestyle-container">
+
+   
+        <!-- RIGHT TEXT -->
+        <div class="lifestyle-right">
+            <h2>
+                Chill in a <span>common area</span>
+that's anything but common
+            </h2>
+
+            <p>
+               Nope, we don't try to pass off a few plastic chairs and a 
+               TV as a common area. We've replaced them with sofas, bean bags and large-screen TVs.
+                And we've also added gaming zones, fitness centres and chillout corners as a bonus.
+            </p>
+        </div>
+             <!-- LEFT BIG IMAGE -->
+   
+
+        <!-- MIDDLE TWO IMAGES -->
+        <div class="lifestyle-middle">
+            <img src="{% static 'orgf.webp' %}" alt="">
+            <img src="{% static 'nightto.webp' %}" alt="">
+        </div>
+             <div class="lifestyle-left">
+            <img src="{% static 'osos.jpg' %}" alt="">
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= TESTIMONIALS (WITH IMAGES) ================= -->
+<section class="lifestyle-section" style="padding:100px 80px; background:#f4f8ff;">
+    <div class="experience-content" style="text-align:center;">
+  
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; margin-top:50px;">
+            {% for review in latest_reviews %}
+            <div class="stat-card" style="padding:20px; border-radius:20px; background:white; box-shadow:0 15px 40px rgba(0,0,0,0.1); text-align:left;">
+                <img src="{{ review.review_image.url }}" style="width:100%; height:180px; object-fit:cover; border-radius:15px; margin-bottom:15px;">
+                <p style="font-size:15px; color:#555;">"{{ review.comment|truncatechars:120 }}"</p>
+                <p style="margin-top:10px; font-weight:bold; color:#004aad;">- {{ review.user.username }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= WHY CHOOSE MAHANIVAS ================= -->
+<section style="padding:100px 80px; text-align:center;">
+    <h1 style="font-size:42px; color:#004aad; margin-bottom:20px;">Why Choose <span>MahaNivas?</span></h1>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:40px; margin-top:50px;">
+        <div class="stat-card" style="padding:30px; border-radius:20px; background:white; box-shadow:0 15px 40px rgba(0,0,0,0.1);">
+            <img src="{% static 'veri.jfif' %}" style="width:300px; margin-bottom:15px;">
+            <h2 style="color:#004aad;">Trusted & Verified</h2>
+            <p style="color:#555;">All listings are verified for safety and quality.</p>
+        </div>
+        <div class="stat-card" style="padding:30px; border-radius:20px; background:white; box-shadow:0 15px 40px rgba(0,0,0,0.1);">
+              <img src="{% static 'pas.jpg' %}" style="width:260px; margin-bottom:15px;">
+            <h2 style="color:#004aad;">Community Living</h2>
+            <p style="color:#555;">Designed for connection, comfort, and convenience.</p>
+        </div>
+        <div class="stat-card" style="padding:30px; border-radius:20px; background:white; box-shadow:0 15px 40px rgba(0,0,0,0.1);">
+              <img src="{% static 'alls.webp' %}" style="width:350px; margin-bottom:15px;">
+            <h2 style="color:#004aad;">All Inclusive</h2>
+            <p style="color:#555;">Furniture, WiFi, and utilities included in price.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CTA BANNER ================= -->
+<section style="padding:120px 40px; background:#004aad; text-align:center; color:white; border-radius:25px; margin:100px 80px;">
+    <h1 style="font-size:48px; font-weight:700;">Find Your Perfect Home Today</h1>
+    <p style="font-size:20px; max-width:700px; margin:20px auto;">Explore our professionally managed spaces and move in instantly with zero hassle.</p>
+    <a href="{% url 'explore_rooms' %}" style="padding:18px 45px; background:#ff9800; color:white; border-radius:50px; font-weight:700; text-decoration:none; font-size:18px;">Explore Rooms</a>
+</section>
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}
+<script>
+
+function toggleDropdown(){
+    const drop = document.getElementById("dropdown");
+    drop.style.display = drop.style.display === "flex" ? "none" : "flex";
+}
+
+window.onclick = function(e){
+    if(!e.target.matches('.nav-links a')){
+        document.getElementById("dropdown").style.display = "none";
+    }
+}
+
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(()=>{
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+},4000);
+
+
+</script>
+<script>
+let lastScrollTop = 0;
+const navbar = document.querySelector("nav");
+
+window.addEventListener("scroll", function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Scroll Down → Hide
+        navbar.classList.add("nav-hide");
+    } else {
+        // Scroll Up → Show
+        navbar.classList.remove("nav-hide");
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+});
+</script>
+
+
+</body>
+</html>

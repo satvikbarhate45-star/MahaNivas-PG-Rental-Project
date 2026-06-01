@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>All User Reviews</h2>
+
+<table>
+    <tr>
+        <th>User</th>
+        <th>Room</th>
+        <th>Rating</th>
+        <th>Comment</th>
+        <th>Image</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+
+    {% for review in reviews %}
+    <tr>
+        <td>{{ review.user.username }}</td>
+        <td>{{ review.room.title }}</td>
+        <td>{{ review.rating }} ⭐</td>
+        <td>{{ review.comment }}</td>
+
+        <td>
+            {% if review.review_image %}
+                <img src="{{ review.review_image.url }}" class="thumb">
+            {% else %}
+                No Image
+            {% endif %}
+        </td>
+
+        <td>
+            {% if review.is_approved %}
+                Approved
+            {% else %}
+                Pending
+            {% endif %}
+        </td>
+
+        <td>{{ review.created_at|date:"d M Y" }}</td>
+
+        <td>
+            {% if not review.is_approved %}
+                <a class="btn" href="{% url 'approve_review' review.id %}">Approve</a>
+            {% else %}
+                ✔
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "footer.html" %}
+{% load static %}
+
+{% block content %}
+
+<section style="padding:80px 20px; background:#f4f8ff; min-height:100vh;">
+<a href="{% url 'home' %}" style="color:#004aad; font-size:16px; margin-bottom:20px; display:inline-block;">← Back to Home</a>
+    <!-- WELCOME HEADER -->
+    <div style="text-align:center; margin-bottom:60px;">
+        <h1 style="font-size:42px; color:#004aad; margin-bottom:15px;">
+            Welcome Home, {{ user.first_name }}!
+        </h1>
+        <p style="font-size:20px; color:#555; max-width:800px; margin:auto;">
+            Your comfort is our priority. Access all your room services below.
+        </p>
+    </div>
+
+    <!-- SERVICE GRID -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px; max-width:1200px; margin:auto;">
+
+        <!-- Meal/Food Service -->
+        <div style="background:white; border-radius:20px; padding:30px; box-shadow:0 15px 40px rgba(0,0,0,0.1); text-align:center; transition:0.3s;">
+           <img src="{% static 'peo.webp' %}" alt="Housekeeping" style="width:300px; margin-bottom:20px;border-radius:10px;">
+            <h3 style="color:#004aad; margin-bottom:10px;">🍽️ Meal Service</h3>
+            <p style="color:#555; font-size:14px; margin-bottom:15px;">Today's Menu: Paneer Butter Masala, Dal Tadka, Rice</p>
+        
+        </div>
+
+        <!-- Housekeeping -->
+        <div style="background:white; border-radius:20px; padding:30px; box-shadow:0 15px 40px rgba(0,0,0,0.1); text-align:center; transition:0.3s;">
+            <img src="{% static 'hc.jpg' %}" alt="Housekeeping" style="width:300px; margin-bottom:20px;border-radius:10px;">
+            <h3 style="color:#004aad; margin-bottom:10px;">🧹 Housekeeping</h3>
+            <p style="color:#555; font-size:14px;">Status: Cleaned at 10 AM</p>
+        </div>
+
+        <!-- Laundry -->
+        <div style="background:white; border-radius:20px; padding:30px; box-shadow:0 15px 40px rgba(0,0,0,0.1); text-align:center; transition:0.3s;">
+            <img src="{% static 'mc.jpg' %}" alt="Laundry" style="width:300px; margin-bottom:20px;border-radius:10px;">
+            <h3 style="color:#004aad; margin-bottom:10px;">🧺 Laundry</h3>
+            <p style="color:#555; font-size:14px;">Request pickup and track status</p>
+          
+        </div>
+
+        <!-- Wi-Fi & Utilities -->
+        <div style="background:white; border-radius:20px; padding:30px; box-shadow:0 15px 40px rgba(0,0,0,0.1); text-align:center; transition:0.3s;">
+           <img src="{% static 'free.webp' %}" alt="WiFi" style="width:300px; margin-bottom:20px;border-radius:10px;">
+            <h3 style="color:#004aad; margin-bottom:10px;">📶 Wi-Fi & Utilities</h3>
+            <p style="color:#555; font-size:14px;">Wi-Fi Password: Maha@1234</p>
+            <p style="color:#555; font-size:14px;">Electricity Usage: 35 kWh</p>
+        </div>
+
+        <!-- Maintenance / Repair -->
+        <div style="background:white; border-radius:20px; padding:30px; box-shadow:0 15px 40px rgba(0,0,0,0.1); text-align:center; transition:0.3s;">
+            <img src="{% static 'main.webp' %}" alt="WiFi" style="width:300px; margin-bottom:20px;border-radius:10px;">
+            <h3 style="color:#004aad; margin-bottom:10px;">🔧 Maintenance</h3>
+            <p style="color:#555; font-size:14px;">Report plumbing, electrical, or other issues</p>
+          
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

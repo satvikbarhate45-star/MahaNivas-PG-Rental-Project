@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Room Already Booked</title>
+    <style>
+        body { font-family:'Segoe UI'; text-align:center; padding:50px; background:#f8d7da; color:#721c24;}
+        .box { background:#fff; padding:30px; border-radius:15px; display:inline-block;}
+        a { display:inline-block; margin-top:20px; padding:10px 20px; background:#004aad; color:white; text-decoration:none; border-radius:10px;}
+        a:hover { background:#002c7a;}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Oops! This room is already booked 😔</h1>
+        <p>Please select another room from the explore page.</p>
+        <a href="{% url 'explore_rooms' %}">Back to Explore Rooms</a>
+    </div>
+</body>
+</html>

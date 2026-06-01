@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.add-btn{
+    background:#28a745;
+    color:white;
+    padding:8px 15px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.add-btn:hover{
+    background:#218838;
+}
+
+.table-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.05);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#004aad;
+    color:white;
+    padding:12px;
+    text-align:center;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f8f9fa;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:white;
+    padding:6px 12px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.delete-btn:hover{
+    background:#c82333;
+}
+</style>
+
+<div class="page-header">
+    <h1 style="color:#004aad;">Districts</h1>
+    <a href="{% url 'add_district' %}" class="add-btn">+ Add New District</a>
+</div>
+
+<div class="table-card">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>District Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for district in districts %}
+        <tr>
+            <td>{{ district.id }}</td>
+            <td>{{ district.name }}</td>
+            <td>
+                <a href="{% url 'delete_district' district.id %}" 
+                   class="delete-btn"
+                   onclick="return confirm('Are you sure you want to delete this district?');">
+                   Delete
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No districts found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

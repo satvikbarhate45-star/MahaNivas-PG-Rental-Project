@@ -1,0 +1,136 @@
+{% extends "footer.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding:50px 20px;background:#f4f8ff;">
+<a href="{% url 'home' %}" style="display:inline-block; margin:30px; font-size:18px; color:#004aad;background:#f4f8ff;">
+    
+
+    ← Back to Home</a>
+<section style="padding:100px 80px; background:#f4f8ff;">
+
+    <!-- HERO SECTION -->
+    <div style="text-align:center; margin-bottom:100px;">
+        <h1 style="font-size:52px; color:#004aad; margin-bottom:20px; font-weight:700;">
+            About MahaNivas
+        </h1>
+        <p style="font-size:20px; color:#555; max-width:900px; margin:auto; line-height:1.8;">
+            MahaNivas is a next-generation PG & co-living platform built to make finding 
+            a second home effortless, transparent and stress-free. We combine technology, 
+            trust, and comfort to create living spaces where people grow and thrive.
+        </p>
+    </div>
+
+    <!-- ABOUT IMAGE + STORY -->
+    <div style="display:flex; gap:60px; align-items:center; margin-bottom:120px;">
+
+        <div style="flex:1;">
+            <img src="{% static 'hellos.jpg' %}" 
+                 style="width:100%; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.15);">
+        </div>
+
+        <div style="flex:1;">
+            <h2 style="font-size:38px; margin-bottom:25px;">
+                Our <span style="color:#004aad;">Story</span>
+            </h2>
+            <p style="font-size:18px; color:#555; line-height:1.9;">
+                Finding a safe and affordable PG should not be complicated. MahaNivas was 
+                created to eliminate brokerage issues, fake listings, and hidden charges.
+                We aim to simplify the booking process while ensuring every listing is 
+                verified and professionally managed.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- MISSION & VISION -->
+    <div style="display:flex; gap:60px; margin-bottom:120px;">
+
+        <div style="flex:1; background:white; padding:50px; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+            <h3 style="font-size:30px; color:#004aad; margin-bottom:20px;">Our Mission</h3>
+            <p style="font-size:17px; color:#555; line-height:1.8;">
+                To provide comfortable, affordable and safe shared living spaces 
+                while ensuring a seamless digital booking experience.
+            </p>
+        </div>
+
+        <div style="flex:1; background:white; padding:50px; border-radius:25px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+            <h3 style="font-size:30px; color:#004aad; margin-bottom:20px;">Our Vision</h3>
+            <p style="font-size:17px; color:#555; line-height:1.8;">
+                To become India's most trusted student and professional housing platform, 
+                redefining modern community living.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- WHY CHOOSE US -->
+    <div style="text-align:center; margin-bottom:100px;">
+        <h2 style="font-size:42px; margin-bottom:60px;">
+            Why Choose <span style="color:#004aad;">MahaNivas?</span>
+        </h2>
+
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:40px;">
+
+            <div style="background:white; padding:50px; border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.1); transition:0.3s;">
+                <img src="{% static 'opopop.jpg' %}" style="width:100%; border-radius:15px; margin-bottom:20px;">
+                <h3 style="color:#004aad; margin-bottom:15px;">No Brokerage</h3>
+                <p style="color:#555;">Transparent pricing with zero hidden charges.</p>
+            </div>
+
+            <div style="background:white; padding:50px; border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.1); transition:0.3s;">
+                <img src="{% static 'buy.jpg' %}" style="width:100%; border-radius:15px; margin-bottom:20px;">
+                <h3 style="color:#004aad; margin-bottom:15px;">Verified Listings</h3>
+                <p style="color:#555;">Every room is inspected and verified for quality & safety.</p>
+            </div>
+
+            <div style="background:white; padding:50px; border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.1); transition:0.3s;">
+                <img src="{% static 'apa.jpg' %}" style="width:100%; border-radius:15px; margin-bottom:20px;">
+                <h3 style="color:#004aad; margin-bottom:15px;">Community Living</h3>
+                <p style="color:#555;">Spaces designed to help you connect, study and grow.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- GALLERY SECTION -->
+    <div style="text-align:center; margin-bottom:100px;">
+        <h2 style="font-size:42px; margin-bottom:50px; color:#004aad;">
+            Inside MahaNivas
+        </h2>
+
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+
+    <img src="{% static 'osp.jpeg' %}" 
+         style="width:100%; height:380px; object-fit:cover; border-radius:15px;">
+
+    <img src="{% static 'opes.jpg' %}" 
+         style="width:100%; height:380px; object-fit:cover; border-radius:15px;">
+
+    <img src="{% static 'oooo.jpg' %}" 
+         style="width:100%; height:380px; object-fit:cover; border-radius:15px;">
+
+    <img src="{% static 'aaa.jpg' %}" 
+         style="width:100%; height:380px; object-fit:cover; border-radius:15px;">
+
+</div>
+    </div>
+
+    <!-- CTA SECTION -->
+    <div style="text-align:center; background:#004aad; padding:80px 40px; border-radius:30px; color:white;">
+        <h2 style="font-size:38px; margin-bottom:20px;">
+            Find Your Perfect Stay Today
+        </h2>
+        <p style="font-size:18px; margin-bottom:30px;">
+            Join thousands of happy residents who found their second home with MahaNivas.
+        </p>
+        <a href="{% url 'explore_rooms' %}" 
+           style="background:white; color:#004aad; padding:15px 40px; border-radius:30px; 
+                  text-decoration:none; font-weight:600;">
+            Explore Rooms
+        </a>
+    </div>
+
+</section>
+</div>
+{% endblock %}

@@ -1,0 +1,297 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MahaNivas Admin Dashboard</title>
+
+<style>
+
+/* ===== GLOBAL ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+html{
+    scroll-behavior:smooth;
+}
+body{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fc;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+    width:260px;
+    background:#004aad;
+    color:white;
+    padding:25px 20px;
+    position:fixed;
+    height:100%;
+    overflow-y:auto;
+}
+.sidebar h2{
+    margin-bottom:25px;
+}
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:5px;
+}
+.sidebar a:hover{
+    background:rgba(255,255,255,0.1);
+}
+
+/* ===== MAIN ===== */
+.main{
+    flex:1;
+    margin-left:260px;
+    padding:25px;
+}
+
+/* ===== CARDS ===== */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:40px;
+}
+.card{
+    background:#004aad;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+}
+.card:hover{
+    background:#003080;
+}
+.card h3{
+    font-size:28px;
+}
+
+/* ===== SECTION ===== */
+.section{
+    margin-bottom:50px;
+}
+.section h2{
+    margin-bottom:15px;
+    color:#004aad;
+}
+
+/* ===== TABLE ===== */
+.table-container{
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    overflow-x:auto;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th{
+    background:#004aad;
+    color:white;
+    padding:12px;
+}
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+.btn{
+    background:#004aad;
+    color:white;
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    text-decoration:none;
+}
+.btn-danger{
+    background:red;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+    .sidebar{
+        display:none;
+    }
+    .main{
+        margin-left:0;
+    }
+}
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card {
+    background: #0529ae;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar">
+    <h2>MahaNivas</h2>
+    <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+    <a href="{% url 'district_list' %}">Manage Districts</a>
+    <a href="{% url 'total_rooms' %}">Manage Rooms</a>
+    <a href="{% url 'manage_bookings' %}">Manage Bookings</a>
+    <a href="{% url 'add_room' %}">Add Room</a>
+    <a href="{% url 'unapproved_reviews' %}">Unapproved Reviews</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+    <h1 style="margin-bottom:20px;">Admin Dashboard</h1>
+
+    <!-- ===== CARDS ===== -->
+    <div class="cards">
+
+        <a href="#bookings">
+            <div class="card">
+                <p>Total Bookings</p>
+                <h3>{{ total_bookings }}</h3>
+            </div>
+        </a>
+
+        <a href="#rooms">
+            <div class="card">
+                <p>Total Rooms</p>
+                <h3>{{ total_rooms }}</h3>
+            </div>
+        </a>
+
+        <a href="#reviews">
+            <div class="card">
+                <p>Total Reviews</p>
+                <h3>{{ total_reviews }}</h3>
+            </div>
+        </a>
+
+       <a href="{% url 'district_list' %}" class="card-link">
+    <div class="card">
+        <p>Total Districts</p>
+        <h3>{{ total_districts }}</h3>
+    </div>
+</a>
+
+    </div>
+
+    <!-- ===== BOOKINGS ===== -->
+    <div class="section" id="bookings">
+        <h2>All Bookings</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Room</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>People</th>
+                    <th>Amount (₹)</th>
+                </tr>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.room.title }}</td>
+                    <td>{{ booking.from_date }}</td>
+                    <td>{{ booking.to_date }}</td>
+                    <td>{{ booking.people_count }}</td>
+                    <td>{{ booking.total_amount }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No bookings found.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== ROOMS ===== -->
+    <div class="section" id="rooms">
+        <h2>All Rooms</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>District</th>
+                    <th>Address</th>
+                    <th>Price (₹)</th>
+                    <th>Available</th>
+                </tr>
+                {% for room in rooms %}
+                <tr>
+                    <td>{{ room.title }}</td>
+                    <td>{{ room.district.name }}</td>
+                    <td>{{ room.address }}</td>
+                    <td>{{ room.price }}</td>
+                    <td>
+                        {% if room.is_available %}Yes{% else %}No{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5">No rooms found.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== REVIEWS ===== -->
+    <div class="section" id="reviews">
+        <h2>All Reviews</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Room</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                </tr>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.user.username }}</td>
+                    <td>{{ review.room.title }}</td>
+                    <td>{{ review.rating }} ⭐</td>
+                    <td>{{ review.comment }}</td>
+                    <td>
+                        {% if review.is_approved %}
+                            Approved
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5">No reviews found.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+</body>
+</html>

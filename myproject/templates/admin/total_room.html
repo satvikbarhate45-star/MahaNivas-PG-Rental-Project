@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="color:#004aad; margin-bottom:20px;">All PG Rooms</h2>
+
+<div style="overflow-x:auto; background:white; padding:20px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+    <table style="width:100%; border-collapse:collapse; min-width:600px;">
+        <thead>
+            <tr style="background:#004aad; color:white;">
+                <th>Title</th>
+                <th>Owner</th>
+                <th>District</th>
+                <th>Price</th>
+                <th>Vibe</th>
+                <th>Wifi</th>
+                <th>Parking</th>
+                <th>AC</th>
+                <th>Attached Bathroom</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.title }}</td>
+                <td>{{ room.owner.username if room.owner else "N/A" }}</td>
+                <td>{{ room.district.name }}</td>
+                <td>{{ room.price }}</td>
+                <td>{{ room.vibe_tag }}</td>
+                <td>{{ room.wifi|yesno:"Yes,No" }}</td>
+                <td>{{ room.parking|yesno:"Yes,No" }}</td>
+                <td>{{ room.ac|yesno:"Yes,No" }}</td>
+                <td>{{ room.attached_bathroom|yesno:"Yes,No" }}</td>
+                <td>{{ room.created_at|date:"d M Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="10" style="text-align:center;">No rooms available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

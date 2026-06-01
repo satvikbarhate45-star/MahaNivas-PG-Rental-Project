@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MahaNivas Admin</title>
+
+<style>
+/* ================= GLOBAL ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+body{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fc;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+    width:260px;
+    background:#004aad;
+    color:white;
+    padding:25px 20px;
+    position:fixed;
+    height:100%;
+    overflow-y:auto;
+}
+.sidebar h2{
+    margin-bottom:30px;
+}
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:4px;
+}
+.sidebar a:hover{
+    background: rgba(255,255,255,0.1);
+}
+
+/* ================= MAIN ================= */
+.main{
+    flex:1;
+    margin-left:260px;
+    padding:25px;
+}
+.main h1, .main h2{
+    color:#004aad;
+}
+
+/* ================= BUTTON ================= */
+.btn{
+    padding:6px 12px;
+    background:#004aad;
+    color:white;
+    text-decoration:none;
+    border-radius:4px;
+    display:inline-block;
+    margin-bottom:10px;
+}
+.btn:hover{
+    background:#003080;
+}
+
+/* ================= TABLE ================= */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+th, td{
+    padding:10px;
+    border:1px solid #ddd;
+}
+th{
+    background:#004aad;
+    color:white;
+}
+img.thumb{
+    width:60px;
+    height:60px;
+    object-fit:cover;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    .sidebar{
+        left:-260px;
+        position:absolute;
+        z-index:999;
+    }
+    .sidebar.active{
+        left:0;
+    }
+    .main{
+        margin-left:0;
+    }
+}
+.menu-btn{
+    font-size:24px;
+    cursor:pointer;
+    color:#004aad;
+    display:none;
+}
+@media(max-width:768px){
+    .menu-btn{
+        display:block;
+        margin-bottom:15px;
+    }
+}
+</style>
+</head>
+<body>
+<div class="sidebar">
+    <h2>MahaNivas</h2>
+    <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+    <a href="{% url 'district_list' %}">Manage Districts</a>
+    <a href="{% url 'total_rooms' %}">Manage Rooms</a>
+    <a href="{% url 'manage_bookings' %}">Manage Bookings</a>
+    <a href="{% url 'add_room' %}">Add Room</a>
+    <a href="{% url 'unapproved_reviews' %}">Unapproved Reviews</a>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main">
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    {% block content %}
+    <!-- All child pages will inject their content here -->
+    {% endblock %}
+</div>
+
+<script>
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>User Complaints</h2>
+
+<table>
+    <tr>
+        <th>User</th>
+        <th>Room</th>
+        <th>Issue</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+
+    {% for complaint in complaints %}
+    <tr>
+        <td>{{ complaint.user.username }}</td>
+        <td>{{ complaint.room.title }}</td>
+        <td>{{ complaint.issue }}</td>
+
+        <td>
+            {% if complaint.status == "Resolved" %}
+                Resolved
+            {% else %}
+                Pending
+            {% endif %}
+        </td>
+
+        <td>{{ complaint.created_at|date:"d M Y" }}</td>
+
+        <td>
+            {% if complaint.status == "Pending" %}
+                <a class="btn" href="{% url 'resolve_complaint' complaint.id %}">
+                    Mark Resolved
+                </a>
+            {% else %}
+                ✔
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

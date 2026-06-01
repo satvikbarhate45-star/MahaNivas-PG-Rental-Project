@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login - MahaNivas</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:400px;
+    border:1px solid #e0e0e0;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.header{
+    background:#004aad;
+    color:white;
+    padding:18px;
+    text-align:center;
+    font-size:20px;
+    font-weight:500;
+}
+
+.body{
+    padding:30px;
+}
+
+.input-group{
+    position:relative;
+    margin-bottom:25px;
+}
+
+.input-group input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    outline:none;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    border-color:#004aad;
+}
+
+.input-group label{
+    position:absolute;
+    top:12px;
+    left:12px;
+    color:#777;
+    transition:0.3s;
+    background:white;
+    padding:0 4px;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label{
+    top:-8px;
+    font-size:12px;
+    color:#004aad;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#004aad;
+    color:white;
+    border:none;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#003080;
+}
+
+.error{
+    color:red;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.link{
+    text-align:center;
+    margin-top:18px;
+    font-size:14px;
+}
+
+.link a{
+    color:#004aad;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.link a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="header">MahaNivas Login</div>
+
+<div class="body">
+
+{% for message in messages %}
+<div class="error">{{ message }}</div>
+{% endfor %}
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="input-group">
+<input type="text" name="username" required>
+<label>Username</label>
+</div>
+
+<div class="input-group">
+<input type="password" name="password" required>
+<label>Password</label>
+</div>
+
+<button type="submit">Login</button>
+
+</form>
+
+<div class="link">
+Don't have an account? <a href="{% url 'register' %}">Register</a>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

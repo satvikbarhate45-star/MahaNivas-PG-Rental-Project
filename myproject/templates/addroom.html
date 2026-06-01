@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+/* ================= FORM CARD ================= */
+.form-card{
+    background:#fff;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    max-width:900px;
+    margin:auto;
+}
+
+/* ================= GRID ================= */
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    font-size:14px;
+    margin-bottom:6px;
+    font-weight:500;
+}
+
+input, select, textarea{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:14px;
+    outline:none;
+}
+
+input:focus, select:focus, textarea:focus{
+    border-color:#004aad;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+/* ================= CHECKBOX ================= */
+.checkbox-group{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.checkbox-group label{
+    font-weight:400;
+}
+
+/* ================= BUTTON ================= */
+.submit-btn{
+    margin-top:30px;
+    padding:12px;
+    background:#004aad;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.submit-btn:hover{
+    background:#003080;
+}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+    font-size:26px;
+    margin-bottom:30px;
+    font-weight:600;
+    color:#004aad;
+    text-align:center;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<div class="page-title">Add New Room</div>
+
+<div class="form-card">
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Room Title</label>
+                <input type="text" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" required>
+            </div>
+
+            <div class="form-group">
+                <label>District</label>
+                <select name="district" required>
+                    <option value="">Select District</option>
+                    {% for district in districts %}
+                        <option value="{{ district.id }}">{{ district.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Vibe Tag</label>
+                <select name="vibe_tag" required>
+                    <option value="Peaceful">Peaceful</option>
+                    <option value="Lively">Lively</option>
+                    <option value="Study-friendly">Study-friendly</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <textarea name="address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Environment Description</label>
+                <textarea name="environment_desc" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Main Image</label>
+                <input type="file" name="main_image" required>
+            </div>
+
+            <div class="form-group">
+                <label>Video Tour (Optional)</label>
+                <input type="file" name="video_tour">
+            </div>
+
+        </div>
+
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="wifi"> Wifi</label>
+            <label><input type="checkbox" name="parking"> Parking</label>
+            <label><input type="checkbox" name="attached_bathroom"> Attached Bathroom</label>
+            <label><input type="checkbox" name="ac"> AC</label>
+        </div>
+
+        <button type="submit" class="submit-btn">Add Room</button>
+
+    </form>
+
+</div>
+
+{% endblock %}

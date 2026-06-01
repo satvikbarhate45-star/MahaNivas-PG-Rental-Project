@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="color:#004aad; margin-bottom:20px;">Unapproved Reviews</h2>
+
+<table style="width:100%; border-collapse:collapse;">
+    <thead>
+        <tr style="background:#004aad; color:white;">
+            <th style="padding:10px; text-align:left;">User</th>
+            <th style="padding:10px; text-align:left;">Room</th>
+            <th style="padding:10px; text-align:left;">Rating</th>
+            <th style="padding:10px; text-align:left;">Comment</th>
+            <th style="padding:10px; text-align:left;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in reviews %}
+        <tr style="border-bottom:1px solid #ddd;">
+            <td style="padding:10px;">{{ review.user.username }}</td>
+            <td style="padding:10px;">{{ review.room.title }}</td>
+            <td style="padding:10px;">⭐ {{ review.rating }}/5</td>
+            <td style="padding:10px;">{{ review.comment }}</td>
+            <td style="padding:10px;">
+                <form method="POST" action="{% url 'approve_review' review.id %}">
+    {% csrf_token %}
+    <button type="submit">Approve</button>
+</form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="padding:10px; text-align:center;">No unapproved reviews.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'admin_dashboard' %}" style="display:inline-block; margin-top:20px; background:#004aad; color:white; padding:10px 20px; border-radius:8px; text-decoration:none;">← Back to Dashboard</a>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "footer.html" %}
+{% load static %}
+
+{% block content %}
+
+<section style="padding:100px 80px; background:#f4f8ff;">
+<a href="{% url 'home' %}" style="color:#004aad; font-size:16px; margin-bottom:20px; display:inline-block;">← Back to Home</a>
+    <!-- HERO SECTION -->
+    <div style="text-align:center; margin-bottom:60px;">
+    
+        <h1 style="font-size:48px; color:#004aad; margin-bottom:20px;">
+            Contact MahaNivas
+        </h1>
+        <p style="font-size:20px; color:#555; max-width:800px; margin:auto;">
+            We'd love to hear from you! Reach out to us using the contact details below or connect with our team directly.
+        </p>
+    </div>
+
+    <!-- CONTACT INFO + MAP -->
+    <div style="display:flex; gap:60px; flex-wrap:wrap; justify-content:center; margin-bottom:80px;">
+
+        <!-- INFO -->
+        <div style="flex:1; min-width:300px; max-width:500px;">
+            <h2 style="font-size:32px; color:#004aad; margin-bottom:20px;">Get in Touch</h2>
+            <p style="font-size:18px; color:#555; line-height:1.8;">
+                <strong>Address:</strong> 123, MahaNivas Towers, Bangalore, India<br>
+                <strong>Phone:</strong> +91 98765 43210<br>
+                <strong>Email:</strong> support@mahanivas.com
+            </p>
+        </div>
+
+        <!-- MAP -->
+        <div style="flex:1; min-width:300px; max-width:500px;">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31157.XXX!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670xxxx:0xabcdef123456!2sMahaNivas!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" 
+                width="100%" 
+                height="350" 
+                style="border:0; border-radius:15px;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+    </div>
+
+    <!-- TEAM SECTION -->
+    <div style="text-align:center; margin-bottom:60px;">
+        <h2 style="font-size:42px; color:#004aad; margin-bottom:40px;">Meet Our Support Team</h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:40px; justify-items:center;">
+
+            <!-- TEAM MEMBER -->
+            <div style="text-align:center;">
+                <img src="{% static 'pros.webp' %}" style="width:180px; height:180px; border-radius:50%; object-fit:cover; box-shadow:0 10px 25px rgba(0,0,0,0.15); margin-bottom:15px;">
+                <h3 style="color:#004aad; margin-bottom:5px;">Shripad V.D</h3>
+                <p style="color:#555; font-size:14px;">Customer Support Lead</p>
+            </div>
+
+            <div style="text-align:center;">
+                <img src="{% static 'osps.webp' %}" style="width:180px; height:180px; border-radius:50%; object-fit:cover; box-shadow:0 10px 25px rgba(0,0,0,0.15); margin-bottom:15px;">
+                <h3 style="color:#004aad; margin-bottom:5px;">Gaurav S.K</h3>
+                <p style="color:#555; font-size:14px;">Booking & Helpdesk</p>
+            </div>
+
+            <div style="text-align:center;">
+                <img src="{% static 'popp.webp' %}" style="width:180px; height:180px; border-radius:50%; object-fit:cover; box-shadow:0 10px 25px rgba(0,0,0,0.15); margin-bottom:15px;">
+                <h3 style="color:#004aad; margin-bottom:5px;">Akash S.M</h3>
+                <p style="color:#555; font-size:14px;">Technical Support</p>
+            </div>
+
+            <div style="text-align:center;">
+                <img src="{% static 'oooa.webp' %}" style="width:180px; height:180px; border-radius:50%; object-fit:cover; box-shadow:0 10px 25px rgba(0,0,0,0.15); margin-bottom:15px;">
+                <h3 style="color:#004aad; margin-bottom:5px;">Darshan S.J</h3>
+                <p style="color:#555; font-size:14px;">Customer Experience</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOLLOW US SECTION -->
+    <div style="text-align:center; padding:60px 20px; background:white; border-radius:20px; max-width:900px; margin:auto;">
+        <h2 style="font-size:36px; color:#004aad; margin-bottom:25px;">Follow Us</h2>
+        <p style="font-size:16px; color:#555; margin-bottom:30px;">
+            Stay connected with us on social media for updates, news and offers.
+        </p>
+        <div style="display:flex; justify-content:center; gap:25px; font-size:24px;">
+            <a href="#" style="color:#004aad;"><img src="{% static 'whatss.jfif' %}" style="width:45px; height:40px;"></a>
+            <a href="#" style="color:#004aad;"><img src="{% static 'oa.png' %}" style="width:40px; height:40px;"></a>
+            <a href="#" style="color:#004aad;"><img src="{% static 'twi.webp' %}" style="width:50px; height:40px;"></a>
+            <a href="#" style="color:#004aad;"><img src="{% static 'in.webp' %}" style="width:40px; height:40px;"></a>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

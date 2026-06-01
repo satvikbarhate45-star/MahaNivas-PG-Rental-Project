@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unapproved Reviews | MahaNivas Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #004aad;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .review-user {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .review-room {
+            color: #004aad;
+            font-weight: 500;
+        }
+
+        .review-rating {
+            color: #ff9800;
+            font-size: 14px;
+        }
+
+        .review-comment {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-approve, .btn-reject {
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            color: #fff;
+            transition: 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-approve {
+            background: #28a745;
+        }
+
+        .btn-approve:hover {
+            background: #218838;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+        }
+
+        .btn-reject:hover {
+            background: #c82333;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #004aad;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #002c7a;
+            transform: translateY(-2px);
+        }
+
+        @media(max-width:768px){
+            .review-card{
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Unapproved Reviews</h1>
+
+    {% if reviews %}
+        {% for review in reviews %}
+        <div class="review-card">
+            <div class="review-user">{{ review.user.username }}</div>
+            <div class="review-room">Room: {{ review.room.title }}</div>
+            <div class="review-rating">⭐ {{ review.rating }}/5</div>
+            <div class="review-comment">{{ review.comment }}</div>
+
+            <div class="action-buttons">
+                <form method="POST" action="{% url 'approve_review' review.id %}">
+    {% csrf_token %}
+    <button type="submit">Approve</button>
+</form>
+                <form action="{% url 'reject_review' review.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-reject">Reject</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No unapproved reviews found.</p>
+    {% endif %}
+
+    <a href="{% url 'admin_dashboard' %}" class="back-btn">← Back to Dashboard</a>
+</div>
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Manage Bookings{% endblock %}
+
+{% block extra_css %}
+
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #004aad;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.status-pending { color: orange; font-weight: bold; }
+.status-confirmed { color: green; font-weight: bold; }
+.status-cancelled { color: red; font-weight: bold; }
+
+.btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-confirm { background: green; }
+.btn-cancel { background: red; }
+.btn-delete { background: black; }
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Manage Bookings</h1>
+
+<div class="table-container">
+<table>
+    <tr>
+        <th>User</th>
+        <th>Room</th>
+        <th>From</th>
+        <th>To</th>
+        <th>People</th>
+        <th>Amount (₹)</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for booking in bookings %}
+    <tr>
+        <td>{{ booking.user.username }}</td>
+        <td>{{ booking.room.title }}</td>
+        <td>{{ booking.from_date }}</td>
+        <td>{{ booking.to_date }}</td>
+        <td>{{ booking.people_count }}</td>
+        <td>{{ booking.total_amount }}</td>
+
+        <td>
+            <span class="status-{{ booking.status|lower }}">
+                {{ booking.status }}
+            </span>
+        </td>
+
+        <td>
+            <!-- Confirm -->
+      <form action="{% url 'update_booking_status' booking.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="Confirmed">
+    <button class="btn btn-confirm">Confirm</button>
+</form>
+            <!-- Cancel -->
+            <form action="{% url 'update_booking_status' booking.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="Cancelled">
+                <button class="btn btn-cancel">Cancel</button>
+            </form>
+
+            <!-- Delete -->
+            <form action="{% url 'delete_booking' booking.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn btn-delete"
+                    onclick="return confirm('Delete this booking?');">
+                    Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="8" style="text-align:center;">No bookings found.</td>
+    </tr>
+    {% endfor %}
+
+</table>
+</div>
+
+{% endblock %}

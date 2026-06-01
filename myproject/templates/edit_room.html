@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* PAGE TITLE */
+.page-title{
+    font-size:26px;
+    font-weight:600;
+    color:#004aad;
+    margin-bottom:25px;
+}
+
+/* FORM CARD */
+.form-card{
+    background:#ffffff;
+    padding:35px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* GRID */
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+/* FORM GROUP */
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:8px;
+    color:#333;
+}
+
+/* INPUT FIELDS */
+.form-group input,
+.form-group select,
+.form-group textarea{
+    padding:10px 12px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    font-size:14px;
+    transition:0.3s;
+    background:#f9f9f9;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#004aad;
+    background:#fff;
+    outline:none;
+}
+
+/* TEXTAREA FULL WIDTH */
+.form-group textarea{
+    resize:none;
+    min-height:90px;
+}
+
+/* CHECKBOX SECTION */
+.checkbox-group{
+    margin-top:25px;
+    padding:20px;
+    background:#f5f8ff;
+    border-radius:8px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.checkbox-group label{
+    font-weight:500;
+}
+
+/* BUTTON */
+.submit-btn{
+    margin-top:30px;
+    padding:12px 18px;
+    background:#004aad;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+    background:#003080;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+    .checkbox-group{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    
+    <div class="page-title">Edit PG Room</div>
+
+  <a href="{% url 'ad_view_room' room.id %}" 
+       style="
+            background:#6c757d;
+            color:white;
+            padding:8px 14px;
+            text-decoration:none;
+            border-radius:6px;
+            font-size:14px;
+            transition:0.3s;
+       "
+       onmouseover="this.style.background='#545b62'"
+       onmouseout="this.style.background='#6c757d'">
+       ← Back
+    </a>
+
+</div>
+<div class="form-card">
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Room Title</label>
+            <input type="text" name="title" value="{{ room.title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" name="price" value="{{ room.price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>District</label>
+            <select name="district" required>
+                {% for district in districts %}
+                <option value="{{ district.id }}"
+                    {% if room.district.id == district.id %}selected{% endif %}>
+                    {{ district.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Vibe Tag</label>
+            <select name="vibe_tag">
+                <option value="Peaceful" {% if room.vibe_tag == "Peaceful" %}selected{% endif %}>Peaceful</option>
+                <option value="Lively" {% if room.vibe_tag == "Lively" %}selected{% endif %}>Lively</option>
+                <option value="Study-friendly" {% if room.vibe_tag == "Study-friendly" %}selected{% endif %}>Study-friendly</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <textarea name="address">{{ room.address }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Environment Description</label>
+            <textarea name="environment_desc">{{ room.environment_desc }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Change Main Image</label>
+            <input type="file" name="main_image">
+        </div>
+
+        <div class="form-group">
+            <label>Change Video Tour</label>
+            <input type="file" name="video_tour">
+        </div>
+
+    </div>
+
+    <div class="checkbox-group">
+        <label><input type="checkbox" name="wifi" {% if room.wifi %}checked{% endif %}> Wifi</label>
+        <label><input type="checkbox" name="parking" {% if room.parking %}checked{% endif %}> Parking</label>
+        <label><input type="checkbox" name="ac" {% if room.ac %}checked{% endif %}> AC</label>
+        <label><input type="checkbox" name="attached_bathroom" {% if room.attached_bathroom %}checked{% endif %}> Attached Bathroom</label>
+    </div>
+
+    <button type="submit" class="submit-btn">Update Room</button>
+
+</form>
+
+</div>
+
+{% endblock %}

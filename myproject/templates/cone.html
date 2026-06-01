@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Successful | MahaNivas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.room-info {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.room-info img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.room-info p {
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.generate-bill-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #ff9800;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: 0.3s;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    cursor: pointer;
+    border: none;
+}
+
+.generate-bill-btn:hover {
+    background: #ff7000;
+    transform: translateY(-3px);
+}
+
+/* Confetti canvas */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="container">
+    <h1>🎉 Congratulations! 🎉</h1>
+    <h2>You have successfully booked the room</h2>
+
+    <div class="room-info">
+        <img src="{{ room.main_image.url }}" alt="{{ room.title }}">
+        <p><strong>Room:</strong> {{ room.title }}</p>
+        <p><strong>District:</strong> {{ room.district.name }}</p>
+        <p><strong>From:</strong> {{ booking.from_date }} &nbsp; | &nbsp; <strong>To:</strong> {{ booking.to_date }}</p>
+        <p><strong>Total Amount:</strong> ₹ {{ booking.total_amount }}</p>
+    </div>
+
+    <!-- POST Form for Generate Bill -->
+    <form method="POST" action="{% url 'generate_bill' room.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="name" value="{{ booking.booking_name }}">
+        <input type="hidden" name="people" value="{{ booking.people_count }}">
+        <input type="hidden" name="from_date" value="{{ booking.from_date }}">
+        <input type="hidden" name="to_date" value="{{ booking.to_date }}">
+        <input type="hidden" name="aadhar" value="{{ booking.aadhaar }}">
+        <input type="hidden" name="mobile" value="{{ booking.mobile }}">
+        <button type="submit" class="generate-bill-btn">Generate Bill PDF</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+const duration = 5 * 1000;
+const end = Date.now() + duration;
+
+(function frame() {
+    confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1b1']
+    });
+    confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1b1']
+    });
+
+    if (Date.now() < end) {
+        requestAnimationFrame(frame);
+    }
+})();
+</script>
+
+</body>
+</html>
