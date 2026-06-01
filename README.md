@@ -1,1 +1,1 @@
-# MahaNivas-PG-Rental-Project
+# PYTHON-DIJANGO-MahaNivas-PG-Rental-Project
